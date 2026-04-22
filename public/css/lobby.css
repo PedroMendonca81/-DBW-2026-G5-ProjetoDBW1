@@ -1,0 +1,139 @@
+/* 1. RESET E ESTRUTURA BASE (Igual aos outros) */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body, html {
+    height: 100%;
+    width: 100%;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+.jogo {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.zona-meio {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+/* =========================================
+   HEADER, FOOTER E PERFIL 
+   ========================================= */
+.barra-cinzenta {
+    background-color: #d9d9d9;
+    padding: 15px 30px;
+    display: flex;
+    align-items: center;
+    /* justify-content: space-between empurra o título para a esquerda e a foto para a direita! */
+    justify-content: space-between; 
+}
+
+/* O Footer não tem foto, logo queremos que o botão Voltar fique ao centro */
+footer.barra-cinzenta {
+    justify-content: center;
+}
+
+.logo-texto {
+    font-size: 40px;
+    font-weight: 900;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: black;
+}
+
+/* --- ESTILOS DA FOTO DE PERFIL --- */
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Espaço entre o nome e a foto */
+}
+
+.user-name {
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase; /* Dá um ar mais de jogo ao nome */
+}
+
+.user-pfp {
+    width: 60px; /* Reduz a foto gigante para um tamanho de miniatura */
+    height: 60px;
+    border-radius: 50%; /* Corta a imagem num círculo perfeito */
+    border: 3px solid black; /* Borda grossa a combinar com o resto do design */
+    object-fit: cover; /* Garante que a foto não fica esticada nem esmagada */
+}
+
+
+
+/* 2. O MENU DO LOBBY */
+.menu-lobby {
+    display: flex;
+    flex-direction: column;
+    gap: 30px; /* Espaço entre os botões */
+    width: 100%;
+    max-width: 450px; /* Mantém os botões num tamanho elegante */
+    min-width: 400px; /* Evita que os botões fiquem muito pequenos em ecrãs estreitos */
+}
+
+/* 3. OS BOTÕES DO LOBBY */
+.btn-lobby {
+    display: block;
+    width: 100%;
+    text-align: center;
+    text-decoration: none; /* Tira o sublinhado dos links */
+    font-size: 26px;
+    font-weight: bold;
+    padding: 25px;
+    border: 4px solid black;
+    color: black;
+    text-transform: uppercase;
+    box-shadow: 6px 6px 0px black; /* Efeito 3D que usámos no login */
+    transition: all 0.1s ease; /* Animação super rápida */
+}
+
+/* Efeito ao passar o rato e ao clicar (empurra o botão para baixo) */
+.btn-lobby:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 8px 8px 0px black;
+}
+
+.btn-lobby:active {
+    transform: translate(4px, 4px);
+    box-shadow: 2px 2px 0px black;
+}
+
+/* 4. CORES ESPECÍFICAS DOS BOTÕES */
+.btn-jogar {
+    background-color: #35bdbd; /* Ciano para o botão principal */
+    font-size: 26px; /* Um pouco maior que os outros */
+    padding: 25px;
+}
+
+.btn-secundario {
+    background-color: white;
+}
+
+.btn-sair-conta {
+    background-color: #ff4d4d; /* Vermelho suave para botão de saída */
+    color: white;
+    margin-top: 20px; /* Afasta um pouco mais dos outros botões */
+    font-size: 18px;
+}
+
+.header-perfil-link { 
+    text-decoration: none; 
+    color: inherit; /* Mantém a cor preta do texto */
+    display: block; 
+}

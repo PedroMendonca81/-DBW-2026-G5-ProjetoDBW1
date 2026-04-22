@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <%- include ('partials/head', { title: 'Matrioska - Jogo' }) %>
+    <link rel="stylesheet" href="/css/game.css">
+</head>
+<body>
+    <div class="jogo">
+        <%- include ('partials/header', { tipo: 'jogo' }) %>
+
+        <main class="zona-meio">
+            <aside class="lateral-preta"></aside>
+            <section class="area-central">
+                <div class="info-partida">
+                    <div class="caixa-tempo" id="tempo-valor">30s</div>
+                    <div class="caixa-pontuacao" id="pontos-valor">0 pontos</div>
+                </div>
+
+                <article class="tabuleiro-jogo">
+                    <h1 class="palavra-mestra">SOLIDARIEDADE</h1>
+                    
+                    <form class="form-resposta">
+                        <input type="text" id="input-resposta" name="resposta" class="input-resposta" placeholder="Adivinha..." autofocus autocomplete="off" required>
+                        <button type="submit" class="btn-enviar">ADIVINHAR</button>
+                    </form>
+
+                    <form id="form-fim-jogo" action="/game/end" method="POST" style="display: none;">
+                        <input type="hidden" name="pontosFinais" id="input-pontos-finais">
+                        <input type="hidden" name="certasFinais" id="input-certas-finais">
+                    </form>
+                </article>
+            </section>
+            <aside class="lateral-preta"></aside>
+        </main>
+
+        <%- include ('partials/footer', { tipo: 'jogo' }) %>
+    </div>
+
+    <script src="/js/jogo.js"></script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <%- include ('partials/head', { title: 'Matrioska - Salas Online' }) %>
+    <link rel="stylesheet" href="/css/game.css">
+    <link rel="stylesheet" href="/css/online.css">
+</head>
+<body>
+    <div class="jogo">
+        <%- include ('partials/header', { tipo: 'jogo' }) %>
+
+        <main class="zona-meio">
+            <aside class="lateral-preta"></aside>
+            
+            <section class="area-central">
+                <h1 class="titulo-online">ONLINE</h1>
+
+                <div class="container-salas">
+                    <% salas.forEach(sala => { %>
+                        <% const cheia = (sala.jogadores >= sala.max) %>
+                        
+                        <a href="<%= cheia ? '#' : '/game?mode=online&room=' + sala.id %>" 
+                           class="item-sala <%= cheia ? 'sala-cheia' : '' %>">
+                            
+                            <div class="info-sala">
+                                <span class="nome-sala"><%= sala.nome %></span>
+                                <span class="capacidade-sala">
+                                    <%= sala.jogadores %> / <%= sala.max %> pessoas
+                                </span>
+                            </div> <% if (cheia) { %>
+                                <span class="icone-entrar">CHEIA</span>
+                            <% } else { %>
+                                <span class="icone-entrar">➔</span>
+                            <% } %>
+                        </a>
+                    <% }); %>
+                </div>
+            </section>
+            
+            <aside class="lateral-preta"></aside>
+        </main>
+        <%- include ('partials/footer', { tipo: 'jogo' }) %>
+    </div>
+</body>
+</html>

@@ -1,0 +1,180 @@
+/* public/css/profile.css */
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* Retirei o fundo escuro e o alinhamento central, pois agora o jogo vai ocupar tudo */
+}
+
+/* O contentor principal do ecrã agora ocupa 100% da janela */
+.ecra-jogo {
+    background-color: white;
+    width: 100vw;   /* 100% da largura do ecrã */
+    height: 100vh;  /* 100% da altura do ecrã */
+    display: flex;
+    flex-direction: column;
+}
+
+/* As barras cinzentas em cima e em baixo */
+.barra-cinzenta {
+    background-color: #d9d9d9;
+    height: 80px; /* Aumentei um bocadinho para ficar proporcional ao ecrã inteiro */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* A zona do meio que ocupa o resto do espaço */
+.zona-meio {
+    flex: 1;
+    display: flex;
+    justify-content: space-between; 
+}
+
+/* As faixas pretas nas laterais */
+.lateral-preta {
+    width: 100px; /* Ligeiramente mais largas para o ecrã inteiro */
+    background-color: black;
+}
+
+/* A área central onde fica o retângulo branco */
+.area-central {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* O Retângulo com a borda preta do Figma */
+.moldura-preta {
+    border: 8px solid black;
+    width: 80%;
+    max-width: 900px; /* Garante que as coisas não ficam esticadas demais num ecrã gigante */
+    padding: 40px 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+/* Estilos dos botões e caixas */
+.btn-jogo {
+    background-color: #35bdbd; 
+    color: white;
+    border: none;
+    padding: 12px 50px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.btn-voltar {
+    background-color: black;
+    color: white;
+    padding: 8px 80px; 
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.coluna-esquerda {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.foto-perfil {
+    width: 200px; /* Aumentei um bocadinho a foto */
+    height: 200px;
+    border-radius: 50%; 
+    object-fit: cover;
+    border: 8px solid black; 
+}
+
+.caixa-nome {
+    background-color: black;
+    color: white;
+    padding: 12px 20px;
+    margin-top: 20px;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 20px;
+}
+
+.coluna-direita {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; 
+    width: 380px;
+}
+
+.caixa-stat {
+    background-color: #35bdbd;
+    color: white;
+    padding: 12px 20px;
+    font-size: 18px;
+}
+
+.btn-mudar-pfp {
+    background-color: black;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 20px;
+    display: block;
+}
+
+.btn-mudar-pfp:hover {
+    background-color: #333;
+}
+
+/* =========================================================
+   ESTILOS ESPECÍFICOS DA PÁGINA "MUDAR PFP"
+========================================================= */
+
+.conteudo-form-pfp {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px; /* Dá aquele distanciamento elegante entre a foto e o formulário */
+}
+
+.form-foto {
+    width: 250px; /* A foto é visivelmente maior no Figma nesta página */
+    height: 250px;
+}
+
+.formulario-pfp {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 400px; /* Largura das caixas */
+}
+
+/* A caixa onde escreves o texto */
+.input-preto {
+    background-color: white;
+    color: black;
+    border: 6px solid black; /* Borda grossa a combinar com a foto */
+    padding: 15px;
+    font-size: 16px;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* O botão de submeter que parece a caixa preta do teu Figma */
+.btn-preto-largo {
+    background-color: black;
+    color: white;
+    padding: 18px;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.btn-preto-largo:hover {
+    background-color: #333; /* Feedback visual ao passar o rato */
+}

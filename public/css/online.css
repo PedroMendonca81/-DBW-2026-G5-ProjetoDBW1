@@ -1,0 +1,89 @@
+/* =========================================
+   ESTILOS DO SAGUÃO ONLINE (online.css)
+   ========================================= */
+
+/* Título centralizado com o estilo do jogo */
+.titulo-online {
+    font-size: 3rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 30px;
+    color: black;
+    letter-spacing: 2px;
+}
+
+/* Contentor que guarda a lista de salas */
+.container-salas {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 600px; /* Largura ideal para a área central */
+    margin: 0 auto;
+    padding: 10px;
+}
+
+/* O item/cartão de cada sala */
+.item-sala {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    padding: 20px 30px;
+    border: 4px solid black;
+    box-shadow: 6px 6px 0px black; /* Sombra retro igual ao resto do jogo */
+    text-decoration: none;
+    color: black;
+    transition: all 0.1s ease;
+}
+
+/* Efeito Hover: o botão levanta */
+.item-sala:hover:not(.sala-cheia) {
+    transform: translate(-2px, -2px);
+    box-shadow: 8px 8px 0px black;
+    background-color: #f0fdfd; /* Um tom leve de azul ao passar o rato */
+}
+
+/* Estilo para quando a sala está cheia */
+.item-sala.sala-cheia {
+    background-color: #e0e0e0;
+    color: #777;
+    border-color: #777;
+    box-shadow: 4px 4px 0px #777;
+    cursor: not-allowed;
+}
+
+/* Agrupamento do Nome e Capacidade */
+.info-sala {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.nome-sala {
+    font-weight: 900;
+    font-size: 1.4rem;
+    text-transform: uppercase;
+}
+
+.capacidade-sala {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #444;
+}
+
+/* O símbolo ou texto à direita */
+.icone-entrar {
+    font-size: 1.5rem;
+    font-weight: 900;
+    background-color: #35bdbd; /* Ciano para destacar */
+    padding: 5px 15px;
+    border: 3px solid black;
+    box-shadow: 3px 3px 0px black;
+}
+
+.sala-cheia .icone-entrar {
+    background-color: #999;
+    box-shadow: 2px 2px 0px #777;
+}

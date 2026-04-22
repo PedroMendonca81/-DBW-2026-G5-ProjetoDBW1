@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <%- include('partials/head', { title: 'Registo - Matrioska' }) %>
+    
+    <link rel="stylesheet" href="/css/auth.css">
+</head>
+<body>
+
+    <div class="jogo">
+        
+        <%- include('partials/header', { tipo: 'simples' }) %>
+
+        <main class="zona-meio">
+            <section class="area-central">
+                
+                <article class="caixa-auth">
+                    <h1 class="titulo-auth">Criar Conta</h1>
+
+                    <form action="/signup" method="POST" class="form-auth">
+                        <input type="text" name="username" class="input-preto" placeholder="Nome de Utilizador" required autofocus>
+                        
+                        <input type="email" name="email" class="input-preto" placeholder="E-mail" required>
+                        
+                        <input type="password" name="password" class="input-preto" placeholder="Palavra-passe" required>
+                        
+                        <input type="password" name="confirmPassword" class="input-preto" placeholder="Confirmar Palavra-passe" required>
+                        
+                        <button type="submit" class="btn-jogo btn-submeter">REGISTAR</button>
+                    </form>
+
+                    <p class="link-rodape">Já tens conta? <a href="/login" class="link-destaque">Entra aqui</a>.</p>
+                </article>
+
+            </section>
+        </main>
+
+        <%- include('partials/footer', { tipo: 'padrao' }) %>
+
+    </div>
+
+</body>
+</html>

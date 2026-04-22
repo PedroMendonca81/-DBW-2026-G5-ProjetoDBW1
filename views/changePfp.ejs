@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mudar PFP</title>
+    <link rel="stylesheet" href="/css/profile.css">
+</head>
+<body>
+
+    <div class="ecra-jogo">
+        
+        <header class="barra-cinzenta">
+            <button class="btn-jogo">Matrioska</button>
+        </header>
+
+        <main class="zona-meio">
+            <div class="lateral-preta"></div> 
+            
+            <div class="area-central">
+                <div class="conteudo-form-pfp">
+                    
+                    <img src="<%= user.pfp %>" alt="Foto atual" class="foto-perfil form-foto">
+
+                    <form action="/profile/change-pfp" method="POST" class="formulario-pfp">
+                        <input type="text" name="novaPfp" id="novaPfp" placeholder="Cola aqui o URL da nova imagem" required class="input-preto">
+                        
+                        <button type="submit" class="btn-preto-largo">Atualizar Foto</button>
+                    </form>
+
+                </div>
+            </div>
+
+            <div class="lateral-preta"></div> 
+        </main>
+
+        <footer class="barra-cinzenta">
+            <a href="/profile" class="btn-voltar">Voltar</a>
+        </footer>
+
+    </div>
+
+</body>
+</html>

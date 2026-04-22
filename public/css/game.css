@@ -1,0 +1,90 @@
+.area-central {
+    flex : 1;
+    display : flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.info-partida {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 50px;
+}
+
+.caixa-tempo, .caixa-pontuacao {
+    border: 3px solid #35bdbd;
+    padding: 10px 25px;
+    font-size: 24px;
+    font-weight: bold;
+    border-radius: 8px;
+    color: black;
+}
+
+.tabuleiro-jogo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.palavra-mestra {
+    font-size: 52px;
+    letter-spacing: 8px;
+    margin: 0 0 40px 0;
+    text-align: center;
+}
+
+.form-resposta {
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+}
+
+.input-resposta {
+    padding: 15px;
+    font-size: 24px;
+    border: 4px solid black;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.btn-enviar {
+    background-color: #35bdbd; 
+    color: white;
+    border: 4px solid black;
+    padding: 15px;
+    font-size: 22px;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.btn-enviar:hover {
+    background-color: #279999; 
+}
+
+.header-perfil-link { 
+    text-decoration: none; 
+    color: inherit; /* Mantém a cor preta do texto */
+    display: block; 
+}
+
+/* Animação para feedback de acerto ou erro */
+.input-acerto {
+    background-color: #d4edda !important;
+    border-color: #28a745 !important;
+    color: #155724 !important;
+}
+
+.input-erro {
+    background-color: #f8d7da !important;
+    border-color: #dc3545 !important;
+    color: #721c24 !important;
+}

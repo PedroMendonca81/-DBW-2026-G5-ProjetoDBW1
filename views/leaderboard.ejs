@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <%- include('partials/head', { title: 'Classificação - Matrioska' }) %>
+    <link rel="stylesheet" href="/css/leaderboard.css">
+</head>
+<body>
+
+    <div class="jogo">
+        
+        <%- include('partials/header', { tipo: 'completo' }) %>
+
+        <main class="zona-meio">
+            <section class="area-central">
+                
+                <article class="caixa-leaderboard">
+                    <h1 class="titulo-auth">Top Jogadores</h1>
+                    
+                    <table class="tabela-classificacao">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Jogador</th>
+                                <th>Pontuação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% topJogadores.forEach((jogador, index) => { %>
+                                <tr class="linha-jogador">
+                                    <td class="col-pos"><%= index + 1 %>º</td>
+                                    
+                                    <td class="col-nome">
+                                        <a href="/profile/<%= jogador.username %>" class="link-perfil-tabela">
+                                            <%= jogador.username %>
+                                        </a>
+                                    </td>
+                                    
+                                    <td class="col-pontos"><%= jogador.pontos %> pts</td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+
+                    <a href="/lobby" class="btn-jogo btn-submeter" style="text-decoration: none; display: block;">Voltar ao Lobby</a>
+                </article>
+
+            </section>
+        </main>
+
+        <%- include('partials/footer', { tipo: 'padrao' }) %>
+
+    </div>
+
+</body>
+</html>

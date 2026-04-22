@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <%- include('partials/head', { title: 'Lobby - Matrioska' }) %>
+    <link rel="stylesheet" href="/css/lobby.css">
+</head> <body>
+
+    <div class="jogo">
+        <%- include('partials/header', { tipo: 'completo' }) %>
+
+        <main class="zona-meio">
+            <section class="area-central">
+                <div class="menu-lobby">
+                    <a href="/game/online" class="btn-lobby btn-jogo">ONLINE</a>
+    
+                    <a href="/game?mode=solo" class="btn-lobby btn-leaderboard">OFFLINE</a>
+                </div>
+            </section>
+        </main>
+
+        <%- include('partials/footer', { tipo: 'padrao' }) %>
+    </div>
+
+</body>
+</html>

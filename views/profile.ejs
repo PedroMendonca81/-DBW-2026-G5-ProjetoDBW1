@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil - <%= user.username %></title>
+    <link rel="stylesheet" href="/css/profile.css">
+</head>
+<body>
+
+    <div class="ecra-jogo">
+        
+        <header class="barra-cinzenta">
+            <button class="btn-jogo">Matrioska</button>
+        </header>
+
+        <main class="zona-meio">
+            <div class="lateral-preta"></div> <div class="area-central">
+                <div class="moldura-preta">
+                    
+                    <div class="coluna-esquerda">
+                        <img src="<%= user.pfp %>" alt="Foto de Perfil" class="foto-perfil">
+                        <div class="caixa-nome"><%= user.username %></div>
+                    </div>
+
+                    <div class="coluna-direita">
+                        <div class="caixa-stat">Pontuação: <%= user.pontuacao %></div>
+                        <div class="caixa-stat">Nº de respostas certas: <%= user.respostasCertas %></div>
+                        <div class="caixa-stat">Nº de respostas erradas: <%= user.respostasErradas %></div>
+                        <div class="caixa-stat">Tempo de Jogo: <%= user.tempoJogo %></div>
+                        
+                        <a href="/profile/change-pfp" class="btn-mudar-pfp">Mudar pfp</a>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="lateral-preta"></div> </main>
+
+        <footer class="barra-cinzenta">
+            <a href="/lobby" class="btn-voltar">Voltar</a>
+        </footer>
+
+    </div>
+
+</body>
+</html>

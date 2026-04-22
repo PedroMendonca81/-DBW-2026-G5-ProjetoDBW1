@@ -1,0 +1,138 @@
+* {
+    box-sizing: border-box; /* O segredo para as bordas não desalinharem a caixa */
+    margin: 0;
+    padding: 0;
+}
+
+/* =========================================
+   1. ESTRUTURA GERAL (Header, Footer e Fundo)
+   ========================================= */
+
+.logo-texto {
+    font-size: 40px; /* Aumentámos para ser o destaque */
+    font-weight: 900; /* Deixa a letra bem "gorda" e forte */
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 4px; /* Afasta um pouco as letras para dar um ar moderno */
+    color: black;
+    
+    /* Garante que ele não tem estilos de botão (bordas, fundos, etc) */
+    background: none;
+    border: none;
+    cursor: default; /* O rato não muda para a mãozinha, indicando que não é clicável */
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4; /* Um fundo ligeiramente cinza para a caixa branca saltar à vista */
+}
+
+/* O contentor principal que estica a página */
+.jogo {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* A nossa famosa barra do Header e Footer */
+.barra-cinzenta {
+    background-color: #d9d9d9;
+    padding: 15px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* A zona central: empurra o footer para baixo e centra a caixa */
+.zona-meio {
+    display: flex;
+    flex: 1; 
+    justify-content: center; /* Centra na horizontal */
+    align-items: center; /* Centra na vertical */
+    padding: 20px;
+}
+
+/* =========================================
+   2. CAIXA DE LOGIN / SIGN UP
+   ========================================= */
+.caixa-auth {
+    background-color: white;
+    border: 4px solid black; /* Borda grossa estilo jogo */
+    padding: 60px;
+    width: 100%;
+    max-width: 550px; /* Não deixa a caixa ficar gigante em ecrãs grandes */
+    text-align: center;
+    box-shadow: 8px 8px 0px black; /* Dá um efeito 3D retro brutal! */
+}
+
+.titulo-auth {
+    font-size: 32px;
+    margin-top: 0;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* =========================================
+   3. O FORMULÁRIO E OS INPUTS
+   ========================================= */
+.form-auth {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Espaço perfeito entre cada caixa de texto */
+}
+
+.input-preto {
+    font-size: 18px;
+    padding: 18px;
+    border: 3px solid black;
+    text-align: center;
+    width: 100%; 
+    box-sizing: border-box; 
+}
+
+/* Muda a cor da borda quando o utilizador clica para escrever */
+.input-preto:focus {
+    outline: none;
+    border-color: #35bdbd; 
+}
+
+.btn-submeter {
+    background-color: #35bdbd;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 15px;
+    border: 3px solid black;
+    cursor: pointer;
+    text-transform: uppercase;
+    margin-top: 10px;
+    width: 100%; 
+    box-sizing: border-box;
+}
+
+.btn-submeter:hover {
+    background-color: #279999;
+}
+
+/* =========================================
+   4. LINKS NO RODAPÉ DA CAIXA
+   ========================================= */
+.link-rodape {
+    margin-top: 25px;
+    font-size: 15px;
+}
+
+.link-destaque {
+    color: #35bdbd;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.link-destaque:hover {
+    text-decoration: underline;
+}
+
