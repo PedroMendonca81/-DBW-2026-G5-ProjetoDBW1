@@ -1,14 +1,14 @@
-
 <!DOCTYPE html>
 <html lang="pt">
 <head>
     <%- include ('partials/head', { title: 'Matrioska - Salas Online' }) %>
-    <link rel="stylesheet" href="/css/game.css">
+    <link rel="stylesheet" href="/css/lobby.css"> <link rel="stylesheet" href="/css/game.css">
     <link rel="stylesheet" href="/css/online.css">
 </head>
 <body>
     <div class="jogo">
-        <%- include ('partials/header', { tipo: 'jogo' }) %>
+        
+        <%- include ('partials/header', { tipo: 'completo' }) %>
 
         <main class="zona-meio">
             <aside class="lateral-preta"></aside>
@@ -40,7 +40,9 @@
             
             <aside class="lateral-preta"></aside>
         </main>
-        <%- include ('partials/footer', { tipo: 'jogo' }) %>
+        
+        <%- include ('partials/footer', { tipo: 'padrao' }) %>
+        
     </div>
 </body>
 </html>

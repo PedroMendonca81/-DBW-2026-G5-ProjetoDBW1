@@ -37,7 +37,7 @@ export const getOnlineLobby = (req, res) => {
     ];
 
     res.render('game_online_lobby', { 
-        user: currentUser, // Necessário para o header não crashar
+        user: currentUser,    
         salas: salasDisponiveis
     });
 };  

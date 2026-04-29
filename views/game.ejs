@@ -2,11 +2,21 @@
 <html lang="pt">
 <head>
     <%- include ('partials/head', { title: 'Matrioska - Jogo' }) %>
-    <link rel="stylesheet" href="/css/game.css">
+    <link rel="stylesheet" href="/css/lobby.css"> <link rel="stylesheet" href="/css/game.css">
 </head>
 <body>
     <div class="jogo">
-        <%- include ('partials/header', { tipo: 'jogo' }) %>
+        <%- include ('partials/header', { tipo: 'completo' }) %>
+
+        <main class="zona-meio">
+            </main>
+
+        <%- include ('partials/footer', { tipo: 'jogo' }) %>
+    </div>
+</body>
+<body>
+    <div class="jogo">
+        <%- include ('partials/header', { tipo: 'completo' }) %>
 
         <main class="zona-meio">
             <aside class="lateral-preta"></aside>
