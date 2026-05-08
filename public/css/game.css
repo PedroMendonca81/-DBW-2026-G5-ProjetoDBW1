@@ -88,3 +88,38 @@
     border-color: #dc3545 !important;
     color: #721c24 !important;
 }
+
+.zona-adversarios {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 30px; /* Dá espaço antes da Palavra-Mestra */
+    width: 100%;
+    flex-wrap: wrap; /* Se o ecrã for pequeno, os cartões descem para a linha de baixo */
+}
+
+.cartao-adversario {
+    background-color: white;
+    border: 4px solid black;
+    box-shadow: 4px 4px 0px black; /* Mantemos o efeito 3D retro! */
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 150px;
+}
+
+.nome-adv {
+    font-size: 14px;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    color: black;
+}
+
+.pontos-adv {
+    font-size: 22px;
+    font-weight: bold;
+    color: #35bdbd; /* O vosso ciano de destaque */
+    text-shadow: 1px 1px 0px black; /* Dá um leve contorno para sobressair */
+}

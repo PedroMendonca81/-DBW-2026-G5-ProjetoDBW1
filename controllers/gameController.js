@@ -2,11 +2,15 @@
 import currentUser from "../models/user.js"; // Importar a nossa "Base de Dados"
 
 export const getGame = (req, res) => {
+    // Lemos o que vem a seguir ao ponto de interrogação no link (ex: mode=solo)
+    // Se não vier nada, assumimos que é 'solo' por segurança.
+    const modoAtual = req.query.mode || 'solo'; 
    
     res.render('game', {
         title: 'Jogo - Matrioska',
         tipo: 'jogo',
-        user: currentUser 
+        user: currentUser,
+        modoJogo: modoAtual // <-- Passamos esta variável mágica para o EJS!
     });
 }
 

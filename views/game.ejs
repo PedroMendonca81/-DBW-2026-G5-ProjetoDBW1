@@ -1,30 +1,38 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-    <%- include ('partials/head', { title: 'Matrioska - Jogo' }) %>
+    <%- include('partials/head', { title: 'Matrioska - Jogo' }) %>
     <link rel="stylesheet" href="/css/lobby.css"> <link rel="stylesheet" href="/css/game.css">
 </head>
 <body>
     <div class="jogo">
-        <%- include ('partials/header', { tipo: 'completo' }) %>
-
-        <main class="zona-meio">
-            </main>
-
-        <%- include ('partials/footer', { tipo: 'jogo' }) %>
-    </div>
-</body>
-<body>
-    <div class="jogo">
-        <%- include ('partials/header', { tipo: 'completo' }) %>
+        <%- include('partials/header', { tipo: 'completo' }) %>
 
         <main class="zona-meio">
             <aside class="lateral-preta"></aside>
+            
             <section class="area-central">
                 <div class="info-partida">
                     <div class="caixa-tempo" id="tempo-valor">30s</div>
                     <div class="caixa-pontuacao" id="pontos-valor">0 pontos</div>
                 </div>
+
+                <% if (typeof modoJogo !== 'undefined' && modoJogo === 'online') { %>
+                    <div class="zona-adversarios" id="zona-adversarios">
+                        <div class="cartao-adversario" id="cartao-adv-1">
+                            <span class="nome-adv" id="nome-adv-1">NinjaMatrioska</span>
+                            <span class="pontos-adv" id="pontos-adv-1">120 pts</span>
+                        </div>
+                        <div class="cartao-adversario" id="cartao-adv-2">
+                            <span class="nome-adv" id="nome-adv-2">NoobZilla</span>
+                            <span class="pontos-adv" id="pontos-adv-2">80 pts</span>
+                        </div>
+                        <div class="cartao-adversario" id="cartao-adv-3">
+                            <span class="nome-adv" id="nome-adv-3">LoboSolitario</span>
+                            <span class="pontos-adv" id="pontos-adv-3">40 pts</span>
+                        </div>
+                    </div>
+                <% } %>
 
                 <article class="tabuleiro-jogo">
                     <h1 class="palavra-mestra">SOLIDARIEDADE</h1>
@@ -40,10 +48,11 @@
                     </form>
                 </article>
             </section>
+            
             <aside class="lateral-preta"></aside>
         </main>
 
-        <%- include ('partials/footer', { tipo: 'jogo' }) %>
+        <%- include('partials/footer', { tipo: 'jogo' }) %>
     </div>
 
     <script src="/js/jogo.js"></script>
