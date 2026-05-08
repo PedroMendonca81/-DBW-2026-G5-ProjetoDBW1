@@ -136,3 +136,17 @@ body, html {
     text-decoration: underline;
 }
 
+/* =========================================
+   MENSAGENS DE ERRO (LIGADAS À BASE DE DADOS)
+   ========================================= */
+.mensagem-erro {
+    background-color: #ff4d4d;
+    color: white;
+    border: 3px solid black;
+    padding: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    box-shadow: 4px 4px 0px black;
+}

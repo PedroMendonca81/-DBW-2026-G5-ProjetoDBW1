@@ -15,6 +15,11 @@
                 <article class="caixa-auth">
                     <h1 class="titulo-auth">Iniciar Sessão</h1>
                     <form action="/login" method="POST" class="form-auth">
+                        <% if (typeof erro !== 'undefined') { %>
+                            <div class="mensagem-erro">
+                                <%= erro %>
+                            </div>
+                        <% } %>
                         <input type="text" name="username" class="input-preto" placeholder="Nome de Utilizador" required autofocus>
                         <input type="password" name="password" class="input-preto" placeholder="Palavra-Passe" required>
                         <button type="submit" class="btn-auth">Entrar</button>

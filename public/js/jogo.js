@@ -85,3 +85,29 @@ function resetInput(input) {
         input.focus();
     }, 600);
 }
+
+// =========================================
+// LÓGICA MULTIJOGADOR (PREPARAÇÃO PARA SOCKETS)
+// =========================================
+
+/* * Função preparada para o Diogo usar com o Socket.io.
+ * Sempre que o servidor avisar que alguém pontuou, 
+ * chamamos esta função para atualizar o ecrã na hora!
+ */
+function atualizarAdversario(numeroAdversario, novoNome, novaPontuacao) {
+    const elementoNome = document.getElementById(`nome-adv-${numeroAdversario}`);
+    const elementoPontos = document.getElementById(`pontos-adv-${numeroAdversario}`);
+
+    // Só atualiza se as caixas existirem no ecrã (ou seja, se estivermos no modo online)
+    if (elementoNome && elementoPontos) {
+        elementoNome.innerText = novoNome;
+        elementoPontos.innerText = novaPontuacao + " pts";
+        
+        // BÓNUS DE UX: Um pequeno flash dourado para chamar a atenção
+        // de que o adversário acabou de ganhar pontos!
+        elementoPontos.style.color = "#FFD700"; 
+        setTimeout(() => {
+            elementoPontos.style.color = "#35bdbd"; // Volta ao ciano normal
+        }, 500);
+    }
+}
