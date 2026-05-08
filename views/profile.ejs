@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>Perfil - <%= user.username %></title>
     <link rel="stylesheet" href="/css/profile.css">
 </head>
@@ -28,6 +29,9 @@
                         <div class="caixa-stat">Nº de respostas certas: <%= user.respostasCertas %></div>
                         <div class="caixa-stat">Nº de respostas erradas: <%= user.respostasErradas %></div>
                         <div class="caixa-stat">Tempo de Jogo: <%= user.tempoJogo %></div>
+                        <div style="background-color: white; border: 4px solid black; padding: 10px; margin-top: 20px;">
+                        <canvas id="graficoEvolucao"></canvas>
+                        </div>
                         
                         <a href="/profile/change-pfp" class="btn-mudar-pfp">Mudar pfp</a>
                     </div>
@@ -42,6 +46,6 @@
         </footer>
 
     </div>
-
+    <script src="/js/profile.js"></script>
 </body>
 </html>

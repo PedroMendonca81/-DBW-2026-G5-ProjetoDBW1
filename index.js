@@ -30,5 +30,5 @@ app.get('/', (req, res) => {
 });
 // 4. LIGAR O SERVIDOR (É isto que impede o "clean exit"!)
 app.listen(3000, () => {
-    console.log("Servidor Matrioska a correr na porta 3000! 🚀");
+    console.log("Servidor Matrioska a correr na porta 3000!");
 });
