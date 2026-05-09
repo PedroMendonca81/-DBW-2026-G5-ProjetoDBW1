@@ -1,3 +1,6 @@
+import session from "express-session";
+import mongoose from "mongoose";
+import methodOverride from "method-override";
 import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -8,12 +11,19 @@ import modeRoutes from "./routes/modeRoute.js";
 import lobbyRoutes from "./routes/lobbyRoutes.js";
 import leaderboardRoutes from "./routes/leaderboardRoutes.js";
 
+
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // 2. Configurar o EJS e os Formulários
+app.use(session({
+    secret: "o_segredo_da_matrioska_2026", // Uma chave secreta para encriptar a sessão
+    resave: false,
+    saveUninitialized: false
+}));
 app.set("view engine", "ejs");
+app.use(methodOverride("_method"));
 app.use(express.urlencoded({ extended: true })); // Essencial para receber o link da nova imagem
 app.use(express.static(__dirname + "/public"));
 app.use('/', gameRoutes); // Rota do jogo
@@ -25,10 +35,24 @@ app.use('/', leaderboardRoutes); // Rota da leaderboard
 // 3. Dizer ao servidor para usar a tua rota quando alguém for a /profile
 app.use("/profile", profileRoutes);
 
+
+
 app.get('/', (req, res) => {
     res.redirect('/login');
 });
+
+const dbURI = "mongodb+srv://projectx:mendonca67@cluster1.wvohqrm.mongodb.net/?appName=Cluster1";
+
+
+mongoose.connect(dbURI) // [cite: 304]
+  .then(() => {
+    console.log("Conectado ao MongoDB com sucesso!"); // [cite: 308]
+  })
+  .catch((err) => {
+    console.error("Erro na ligação à base de dados:", err); // [cite: 311]
+  });
+
 // 4. LIGAR O SERVIDOR (É isto que impede o "clean exit"!)
 app.listen(3000, () => {
-    console.log("Servidor Matrioska a correr na porta 3000!");
+    console.log("Servidor Matrioska a correr na porta 3000! 🚀");
 });

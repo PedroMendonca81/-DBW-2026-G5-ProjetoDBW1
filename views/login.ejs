@@ -2,7 +2,6 @@
 <html lang="pt">
 <head>
     <%- include ('partials/head', { title: 'Login - Matrioska'}) %>
-
     <link rel="stylesheet" href="/css/auth.css">
 </head>
 <body>
@@ -14,17 +13,18 @@
 
                 <article class="caixa-auth">
                     <h1 class="titulo-auth">Iniciar Sessão</h1>
+                    
+                    <% if (typeof errorMessage !== 'undefined' && errorMessage) { %>
+                        <div class="alerta-erro">
+                            <%= errorMessage %>
+                        </div>
+                    <% } %>
                     <form action="/login" method="POST" class="form-auth">
-                        <% if (typeof erro !== 'undefined') { %>
-                            <div class="mensagem-erro">
-                                <%= erro %>
-                            </div>
-                        <% } %>
                         <input type="text" name="username" class="input-preto" placeholder="Nome de Utilizador" required autofocus>
                         <input type="password" name="password" class="input-preto" placeholder="Palavra-Passe" required>
-                        <button type="submit" class="btn-auth">Entrar</button>
+                        <button type="submit" class="btn-submeter">Entrar</button> 
                     </form>
-                    <p class="link-rodape">Não tem uma conta? <a href="/register" class="link-destaque">Registe-se aqui</a></p>
+                    <p class="link-rodape">Não tem uma conta? <a href="/signup" class="link-destaque">Registe-se aqui</a></p>
                 </article>
             </section>
         </main>
@@ -34,3 +34,4 @@
     </div>
     
 </body>
+</html>

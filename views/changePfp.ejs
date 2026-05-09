@@ -20,14 +20,12 @@
             <div class="area-central">
                 <div class="conteudo-form-pfp">
                     
-                    <img src="<%= user.pfp %>" alt="Foto atual" class="foto-perfil form-foto">
+                    <img src="/images/<%= user.imagemPerfil %>" alt="Foto atual" class="foto-perfil form-foto">
 
-                    <form action="/profile/change-pfp" method="POST" class="formulario-pfp">
-                        <input type="text" name="novaPfp" id="novaPfp" placeholder="Cola aqui o URL da nova imagem" required class="input-preto">
-                        
-                        <button type="submit" class="btn-preto-largo">Atualizar Foto</button>
+                    <form action="/profile/change-pfp" method="POST" enctype="multipart/form-data">
+                        <input type="file" name="novaPfp" accept="image/*" required style="margin-bottom: 15px;">
+                        <button type="submit">Guardar Nova Foto</button>
                     </form>
-
                 </div>
             </div>
 

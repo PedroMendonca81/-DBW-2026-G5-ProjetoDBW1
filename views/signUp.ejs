@@ -18,11 +18,6 @@
                     <h1 class="titulo-auth">Criar Conta</h1>
 
                     <form action="/signup" method="POST" class="form-auth">
-                        <% if (typeof erro !== 'undefined') { %>
-                        <div class="mensagem-erro">
-                            <%= erro %>
-                        </div>
-                        <% } %>
                         <input type="text" name="username" class="input-preto" placeholder="Nome de Utilizador" required autofocus>
                         
                         <input type="email" name="email" class="input-preto" placeholder="E-mail" required>

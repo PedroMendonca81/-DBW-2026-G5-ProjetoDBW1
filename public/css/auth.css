@@ -137,16 +137,16 @@ body, html {
 }
 
 /* =========================================
-   MENSAGENS DE ERRO (LIGADAS À BASE DE DADOS)
+   5. MENSAGEM DE ERRO
    ========================================= */
-.mensagem-erro {
-    background-color: #ff4d4d;
-    color: white;
-    border: 3px solid black;
+.alerta-erro {
+    background-color: #ffcccc; /* Um vermelho claro suave */
+    color: #cc0000; /* Texto vermelho escuro para contrastar */
+    border: 3px solid black; /* Mantém o estilo "jogo" do teu CSS */
     padding: 15px;
-    font-size: 16px;
+    margin-bottom: 20px; /* Dá espaço antes de começar o formulário */
     font-weight: bold;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-    box-shadow: 4px 4px 0px black;
+    font-size: 16px;
+    text-align: center;
+    box-shadow: 4px 4px 0px black; /* Um shadow menor, só para manter a coerência 3D */
 }
