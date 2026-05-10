@@ -25,19 +25,25 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <% topJogadores.forEach((jogador, index) => { %>
-                                <tr class="linha-jogador">
-                                    <td class="col-pos"><%= index + 1 %>º</td>
-                                    
-                                    <td class="col-nome">
-                                        <a href="/profile/<%= jogador.username %>" class="link-perfil-tabela">
-                                            <%= jogador.username %>
-                                        </a>
-                                    </td>
-                                    
-                                    <td class="col-pontos"><%= jogador.pontos %> pts</td>
+                            <% if (topJogadores && topJogadores.length > 0) { %>
+                                <% topJogadores.forEach((jogador, index) => { %>
+                                    <tr class="linha-jogador <%= (user && user.username === jogador.username) ? 'minha-posicao' : '' %>">
+                                        <td class="col-pos"><%= index + 1 %>º</td>
+                                        
+                                        <td class="col-nome">
+                                            <a href="/profile/<%= jogador.username %>" class="link-perfil-tabela">
+                                                <%= jogador.username %>
+                                            </a>
+                                        </td>
+                                        
+                                        <td class="col-pontos"><%= jogador.pontuacao %> pts</td>
+                                    </tr>
+                                <% }) %>
+                            <% } else { %>
+                                <tr>
+                                    <td colspan="3" style="text-align:center; padding: 20px;">Ainda não há jogadores registados.</td>
                                 </tr>
-                            <% }) %>
+                            <% } %>
                         </tbody>
                     </table>
 

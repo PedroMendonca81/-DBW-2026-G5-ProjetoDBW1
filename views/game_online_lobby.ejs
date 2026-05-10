@@ -2,47 +2,70 @@
 <html lang="pt">
 <head>
     <%- include ('partials/head', { title: 'Matrioska - Salas Online' }) %>
-    <link rel="stylesheet" href="/css/lobby.css"> <link rel="stylesheet" href="/css/game.css">
+    <link rel="stylesheet" href="/css/lobby.css"> 
+    <link rel="stylesheet" href="/css/game.css">
     <link rel="stylesheet" href="/css/online.css">
 </head>
 <body>
     <div class="jogo">
-        
         <%- include ('partials/header', { tipo: 'completo' }) %>
 
         <main class="zona-meio">
             <aside class="lateral-preta"></aside>
-            
             <section class="area-central">
                 <h1 class="titulo-online">ONLINE</h1>
 
                 <div class="container-salas">
-                    <% salas.forEach(sala => { %>
-                        <% const cheia = (sala.jogadores >= sala.max) %>
-                        
-                        <a href="<%= cheia ? '#' : '/game?mode=online&room=' + sala.id %>" 
-                           class="item-sala <%= cheia ? 'sala-cheia' : '' %>">
-                            
+                    <% Object.keys(salas).forEach(id => { 
+                        const sala = salas[id];
+                    %>
+                        <a href="/game?mode=online&room=<%= id %>" class="item-sala" id="link-<%= id %>">
                             <div class="info-sala">
                                 <span class="nome-sala"><%= sala.nome %></span>
-                                <span class="capacidade-sala">
+                                <span class="capacidade-sala" id="cap-<%= id %>">
                                     <%= sala.jogadores %> / <%= sala.max %> pessoas
                                 </span>
-                            </div> <% if (cheia) { %>
-                                <span class="icone-entrar">CHEIA</span>
-                            <% } else { %>
-                                <span class="icone-entrar">➔</span>
-                            <% } %>
+                            </div>
+                            <span class="icone-entrar" id="icon-<%= id %>">➔</span>
                         </a>
                     <% }); %>
                 </div>
             </section>
-            
             <aside class="lateral-preta"></aside>
         </main>
-        
         <%- include ('partials/footer', { tipo: 'padrao' }) %>
-        
     </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        // Escuta as atualizações do servidor
+        socket.on('atualizarLobby', (salasServidor) => {
+            console.log("Dados recebidos do servidor:", salasServidor);
+            
+            for (const id in salasServidor) {
+                const sala = salasServidor[id];
+                const spanCapacidade = document.getElementById(`cap-${id}`);
+                const icone = document.getElementById(`icon-${id}`);
+                const link = document.getElementById(`link-${id}`);
+
+                if (spanCapacidade) {
+                    spanCapacidade.innerText = `${sala.jogadores} / ${sala.max} pessoas`;
+                    
+                    // Se encher, bloqueia o botão visualmente
+                    if (sala.jogadores >= sala.max) {
+                        icone.innerText = "CHEIA";
+                        link.style.pointerEvents = "none";
+                        link.style.opacity = "0.6";
+                    } else {
+                        icone.innerText = "➔";
+                        link.style.pointerEvents = "auto";
+                        link.style.opacity = "1";
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>

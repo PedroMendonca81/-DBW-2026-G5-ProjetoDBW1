@@ -3,6 +3,7 @@ let pontuacaoSessao = 0;
 let respostasCertas = 0;
 let tempoRestante = 30;
 let jogoAtivo = true;
+let jogoTerminou = false; // Evita dupla submissão do formulário
 const PALAVRA_MESTRA = "SOLIDARIEDADE";
 let palavrasDescobertas = [];
 
@@ -45,12 +46,17 @@ window.onload = function() {
             jogoAtivo = false;
             if (input) input.disabled = true;
 
-            alert("Fim de jogo! Pontuação: " + pontuacaoSessao);
+            // Evita submeter o formulário múltiplas vezes
+            if (!jogoTerminou) {
+                jogoTerminou = true;
 
-            // ENVIO FINAL PARA O SERVIDOR
-            document.getElementById('input-pontos-finais').value = pontuacaoSessao;
-            document.getElementById('input-certas-finais').value = respostasCertas;
-            document.getElementById('form-fim-jogo').submit();
+                alert("Fim de jogo! Pontuação: " + pontuacaoSessao);
+
+                // ENVIO FINAL PARA O SERVIDOR
+                document.getElementById('input-pontos-finais').value = pontuacaoSessao;
+                document.getElementById('input-certas-finais').value = respostasCertas;
+                document.getElementById('form-fim-jogo').submit();
+            }
         }
     }, 1000);
 };

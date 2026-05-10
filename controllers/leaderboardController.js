@@ -1,17 +1,36 @@
+import User from "../models/user.js"; 
 
-import currentUser from "../models/user.js"; 
+export const getLeaderboard = async (req, res) => {
+    try {
+        // 1. Procurar o utilizador logado (para o Header mostrar o perfil/nome)
+        let utilizadorLogado = null;
+        if (req.session.usernameLogado) {
+            utilizadorLogado = await User.findOne({ username: req.session.usernameLogado }).exec();
+        }
 
-export const getLeaderboard = (req, res) => {
-    
-    
-    const listaTop = [
-        { username: "MestreDasPalavras", pontos: 950 },
-        { username: "NinjaMatrioska", pontos: 820 },
-        { username: "NoobZilla", pontos: 410 },
-        { username: "LoboSolitario", pontos: 300 },
-        { username: "Camper123", pontos: 150 }
-    ];
+        // 2. Ir buscar os 10 melhores jogadores à BD
+        // .sort({ pontuacao: -1 }) -> Ordena de forma decrescente (mais pontos primeiro)
+        // .limit(10) -> Mostra apenas o Top 10
+        const listaTop = await User.find()
+            .sort({ pontuacao: -1 }) 
+            .limit(10)
+            .exec();
 
-    
-    res.render('leaderboard', { user: currentUser, topJogadores: listaTop });
+        // 3. Renderizar a página
+        res.render('leaderboard', { 
+            title: 'Classificação - Matrioska',
+            user: utilizadorLogado, 
+            topJogadores: listaTop,
+            tipo: 'completo' // Garante que o header mostre a área do utilizador
+        });
+
+    } catch (error) {
+        console.error("Erro ao carregar a Leaderboard:", error);
+        res.render('leaderboard', { 
+            title: 'Classificação - Matrioska',
+            user: null, 
+            topJogadores: [], 
+            errorMessage: "Erro ao carregar os dados." 
+        });
+    }
 };
