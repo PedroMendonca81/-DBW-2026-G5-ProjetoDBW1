@@ -6,19 +6,26 @@ export const salasAtivas = {
 
 export default (io) => {
     io.on('connection', (socket) => {
-        // Quando alguém abre o Lobby, recebe os números atuais
         socket.emit('atualizarLobby', salasAtivas);
 
-        // Quando alguém entra no JOGO
-        socket.on('joinRoom', (roomId) => {
-            const id = String(roomId);
+        socket.on('joinRoom', (roomName) => {
+            const id = String(roomName);
             if (salasAtivas[id]) {
                 socket.join(id);
                 socket.salaAtual = id;
                 salasAtivas[id].jogadores++;
-                
-                // 📢 Avisa toda a gente que o número mudou
+
+                // 📢 AVISAR O LOBBY
                 io.emit('atualizarLobby', salasAtivas);
+
+                // 📢 NOVIDADE: Avisar os outros jogadores na sala que tu entraste
+                // (Isto faz o "Aguardando..." mudar para o teu nome no outro browser)
+                socket.to(id).emit('novoAdversario', {
+                    username: "Novo Jogador", // Podes passar o nome real se tiveres
+                    pontos: 0
+                });
+
+                console.log(`✅ Sala ${id}: ${salasAtivas[id].jogadores} jogadores`);
             }
         });
 

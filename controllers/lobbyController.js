@@ -21,25 +21,20 @@ export const getLobby = async (req, res) => {
 // --- ROTA DO LOBBY ONLINE ---
 export const getOnlineLobby = async (req, res) => {
     try {
-        if (!req.session.usernameLogado) return res.redirect('/login');
-
         const utilizadorAtual = await User.findOne({ username: req.session.usernameLogado }).exec();
-
-        // LOG DE DEBUG: Vamos ver no terminal se o controller vê os jogadores
-        console.log("Estado atual das salas no Controller:", JSON.stringify(salasAtivas));
+        
+        // 👈 Lê o objeto que o Socket está a atualizar
+        const salasVivas = req.app.get('salasCompartilhadas'); 
 
         res.render('game_online_lobby', { 
             tipo: 'completo', 
             user: utilizadorAtual,
-            salas: salasAtivas // Enviamos o objeto que o socket deve estar a mudar
+            salas: salasVivas 
         });
-
     } catch (error) {
-        console.error("Erro ao carregar lobby online:", error);
         res.redirect('/mode');
     }
 };
-
 export const getMode = async (req, res) => {
     try {
         if (!req.session.usernameLogado) return res.redirect('/login');

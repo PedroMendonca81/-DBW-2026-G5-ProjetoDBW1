@@ -15,18 +15,27 @@ import modeRoutes from "./routes/modeRoute.js";
 import lobbyRoutes from "./routes/lobbyRoutes.js";
 import leaderboardRoutes from "./routes/leaderboardRoutes.js";
 
-// --- SOCKETS (Apenas UM import aqui resolve tudo) ---
+// --- SOCKETS ---
 import lobbySocket, { salasAtivas } from "./routes/sockets/lobbySocket.js";
 
 const app = express();
-const server = http.createServer(app);
-const io = new Server(server, { cors: { origin: "*" } });
-
-// Ativa o socket do lobby
-lobbySocket(io); 
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// 1. CONFIGURAÇÃO DAS SALAS (Ponte entre Controller e Socket)
+app.set('salasCompartilhadas', salasAtivas);
+
+// 2. CRIAÇÃO DO SERVIDOR (Apenas uma vez!)
+const server = http.createServer(app);
+const io = new Server(server, {
+    cors: {
+        origin: "*", // Permite qualquer origem para evitar erros de bloqueio no teste
+        methods: ["GET", "POST"]
+    }
+});
+
+// 3. ATIVAÇÃO DO SOCKET
+lobbySocket(io); 
 
 // --- MIDDLEWARES ---
 app.use(session({
@@ -51,58 +60,16 @@ app.get('/', (req, res) => {
     res.redirect('/login');
 });
 
-// ==========================================
-// 🎮 GESTÃO DO JOGO (Socket.io Central)
-// ==========================================
-const gameRooms = {};
-
-io.on('connection', (socket) => {
-    
-    // 1. ENTRAR NA SALA
-    socket.on('joinRoom', (roomName) => {
-        const idString = String(roomName); 
-        socket.join(idString);
-        socket.salaAtual = idString;
-
-        console.log(`Tentativa de entrada na sala: ${idString}`);
-
-        if (salasAtivas && salasAtivas[idString]) {
-            salasAtivas[idString].jogadores++; 
-            
-            // 📢 Notifica todos (Lobby e Jogo)
-            io.emit('atualizarLobby', salasAtivas); 
-            
-            console.log(`✅ Sala ${idString} atualizada: ${salasAtivas[idString].jogadores} jogadores`);
-        } else {
-            console.log(`❌ Erro: Sala ${idString} não encontrada em salasAtivas`);
-        }
-    });
-
-    // 2. DISCONNECT
-    socket.on('disconnect', () => {
-        const roomName = socket.salaAtual;
-        if (roomName && salasAtivas && salasAtivas[roomName]) {
-            salasAtivas[roomName].jogadores--;
-            if (salasAtivas[roomName].jogadores < 0) salasAtivas[roomName].jogadores = 0;
-
-            io.emit('atualizarLobby', salasAtivas);
-            console.log(`❌ Saída: Sala ${roomName} restam ${salasAtivas[roomName].jogadores}`);
-        }
-    });
-
-    // 3. PONTOS
-    socket.on('playerScored', (data) => {
-        socket.to(data.roomId).emit('updateScore', data);
-    });
-});
-
 // --- BASE DE DADOS E ARRANQUE ---
 const dbURI = "mongodb+srv://projectx:mendonca67@cluster1.wvohqrm.mongodb.net/?appName=Cluster1";
 mongoose.connect(dbURI) 
   .then(() => {
     console.log("Conectado ao MongoDB com sucesso! ✅");
+    // USAR SEMPRE server.listen e não app.listen
     server.listen(3000, () => {
-        console.log("Servidor Matrioska a correr em http://localhost:3000 🚀");
+        console.log("==========================================");
+        console.log("🚀 Servidor Matrioska: http://localhost:3000");
+        console.log("==========================================");
     });
   })
   .catch((err) => console.error("Erro na ligação à base de dados:", err));

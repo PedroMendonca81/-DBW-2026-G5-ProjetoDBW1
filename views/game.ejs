@@ -2,7 +2,8 @@
 <html lang="pt">
 <head>
     <%- include('partials/head', { title: 'Matrioska - Jogo' }) %>
-    <link rel="stylesheet" href="/css/lobby.css"> <link rel="stylesheet" href="/css/game.css">
+    <link rel="stylesheet" href="/css/lobby.css"> 
+    <link rel="stylesheet" href="/css/game.css">
 </head>
 <body>
     <div class="jogo">
@@ -20,16 +21,16 @@
                 <% if (typeof modoJogo !== 'undefined' && modoJogo === 'online') { %>
                     <div class="zona-adversarios" id="zona-adversarios">
                         <div class="cartao-adversario" id="cartao-adv-1">
-                            <span class="nome-adv" id="nome-adv-1">NinjaMatrioska</span>
-                            <span class="pontos-adv" id="pontos-adv-1">120 pts</span>
+                            <span class="nome-adv" id="nome-adv-1">Aguardando...</span>
+                            <span class="pontos-adv" id="pontos-adv-1">0 pts</span>
                         </div>
                         <div class="cartao-adversario" id="cartao-adv-2">
-                            <span class="nome-adv" id="nome-adv-2">NoobZilla</span>
-                            <span class="pontos-adv" id="pontos-adv-2">80 pts</span>
+                            <span class="nome-adv" id="nome-adv-2">Aguardando...</span>
+                            <span class="pontos-adv" id="pontos-adv-2">0 pts</span>
                         </div>
                         <div class="cartao-adversario" id="cartao-adv-3">
-                            <span class="nome-adv" id="nome-adv-3">LoboSolitario</span>
-                            <span class="pontos-adv" id="pontos-adv-3">40 pts</span>
+                            <span class="nome-adv" id="nome-adv-3">Aguardando...</span>
+                            <span class="pontos-adv" id="pontos-adv-3">0 pts</span>
                         </div>
                     </div>
                 <% } %>
@@ -52,8 +53,29 @@
             <aside class="lateral-preta"></aside>
         </main>
 
-        <%- include('partials/footer', { tipo: 'jogo' }) %>
+<%- include('partials/footer', { tipo: 'jogo' }) %>
     </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script>
+        // Força a ligação ao endereço local onde o Node está a correr
+        const socket = io("http://localhost:3000"); 
+
+        // Debug para veres no console (F12) se a ligação funcionou
+        socket.on('connect', () => {
+            console.log("✅ Conectado ao servidor! ID:", socket.id);
+        });
+
+        socket.on('connect_error', (error) => {
+            console.error("❌ Erro na ligação socket:", error);
+        });
+
+        // Passamos o nome do user para o JS
+        const USERNAME_LOGADO = "<%= user ? user.username : 'Jogador' %>";
+    </script>
+    
+    <div id="nome-user-logado" style="display: none;"><%= user ? user.username : 'Jogador' %></div>
 
     <script src="/js/jogo.js"></script>
 </body>
