@@ -6,35 +6,59 @@ export const salasAtivas = {
 
 export default (io) => {
     io.on('connection', (socket) => {
+        // Envia as salas logo que alguém se liga
         socket.emit('atualizarLobby', salasAtivas);
 
-        socket.on('joinRoom', (roomName) => {
-            const id = String(roomName);
+        // Quando um jogador pede para entrar numa sala
+        socket.on('joinRoom', (data) => {
+            let id;
+            let nomeUser = "Adversário";
+
+            // Deteta se recebeu o pacote novo (Objeto) ou o antigo (String)
+            if (typeof data === 'object') {
+                id = String(data.room);
+                nomeUser = data.username;
+            } else {
+                id = String(data);
+            }
+
             if (salasAtivas[id]) {
                 socket.join(id);
-                socket.salaAtual = id;
-                salasAtivas[id].jogadores++;
+                socket.salaAtual = id;      // Guarda a sala na memória deste utilizador
+                socket.username = nomeUser; // Guarda o nome na memória deste utilizador
 
-                // 📢 AVISAR O LOBBY
+                salasAtivas[id].jogadores++;
+                
+                // 1. AVISA O LOBBY: Faz a soma subir (0 para 1)
                 io.emit('atualizarLobby', salasAtivas);
 
-                // 📢 NOVIDADE: Avisar os outros jogadores na sala que tu entraste
-                // (Isto faz o "Aguardando..." mudar para o teu nome no outro browser)
+                // 2. AVISA OS CARTÕES: Substitui o "Aguardando..." pelo nome
                 socket.to(id).emit('novoAdversario', {
-                    username: "Novo Jogador", // Podes passar o nome real se tiveres
+                    username: nomeUser,
                     pontos: 0
                 });
 
-                console.log(`✅ Sala ${id}: ${salasAtivas[id].jogadores} jogadores`);
+                console.log(`✅ ${nomeUser} entrou na Sala ${id}. Total: ${salasAtivas[id].jogadores}`);
             }
         });
 
+        // Quando alguém pontua no jogo
+        socket.on('playerScored', (data) => {
+            // Repassa os pontos para toda a gente que está na mesma sala
+            socket.to(data.roomId).emit('updateScore', data);
+        });
+
+        // Quando o jogador fecha a aba ou clica no Voltar
         socket.on('disconnect', () => {
             const id = socket.salaAtual;
             if (id && salasAtivas[id]) {
                 salasAtivas[id].jogadores--;
                 if (salasAtivas[id].jogadores < 0) salasAtivas[id].jogadores = 0;
+                
+                // Atualiza o Lobby para subtrair a pessoa
                 io.emit('atualizarLobby', salasAtivas);
+                
+                console.log(`❌ ${socket.username || 'Um jogador'} saiu da Sala ${id}. Restam: ${salasAtivas[id].jogadores}`);
             }
         });
     });

@@ -20,8 +20,14 @@ window.onload = function() {
 
     // 📢 AVISAR ENTRADA NO MODO ONLINE
     if (modoOnline && roomId && typeof socket !== 'undefined') {
-        console.log("Conectando à sala:", roomId);
-        socket.emit('joinRoom', roomId);
+        const nomeUserLogado = document.getElementById('nome-user-logado')?.innerText || "Jogador";
+        console.log("Conectando à sala:", roomId, "como", nomeUserLogado);
+        
+        // Envia a sala e o nome para o servidor saber quem entrou
+        socket.emit('joinRoom', { 
+            room: roomId, 
+            username: nomeUserLogado 
+        });
     }
 
     if (form) {
@@ -124,22 +130,57 @@ if (typeof socket !== 'undefined') {
     // Escutar pontos dos outros
     socket.on('updateScore', (data) => {
         console.log("Adversário pontuou:", data);
-        atualizarAdversario(1, data.username, data.pontos);
+        atualizarPosicaoAdversario(data.username, data.pontos);
     });
 
     // Escutar novos adversários entrando
+
     socket.on('novoAdversario', (data) => {
         console.log("Novo adversário na sala:", data.username);
-        atualizarAdversario(1, data.username, data.pontos);
+        atualizarPosicaoAdversario(data.username, data.pontos);
+
+        // 📢 O TRUQUE MÁGICO: 
+        // Como o adversário acabou de entrar e o ecrã dele está vazio,
+        // eu envio os meus dados atuais para o ecrã dele se preencher com o meu nome!
+        const meuNome = document.getElementById('nome-user-logado')?.innerText || "Jogador";
+        socket.emit('playerScored', { 
+            roomId: roomId, 
+            pontos: pontuacaoSessao,
+            username: meuNome
+        });
     });
 }
 
-function atualizarAdversario(numeroAdversario, novoNome, novaPontuacao) {
-    const elementoNome = document.getElementById(`nome-adv-${numeroAdversario}`);
-    const elementoPontos = document.getElementById(`pontos-adv-${numeroAdversario}`);
+// 🧠 FUNÇÃO INTELIGENTE: Gere os 3 espaços ("slots") de adversários
+function atualizarPosicaoAdversario(nome, pontos) {
+    let slotVazio = null;
 
-    if (elementoNome && elementoPontos) {
-        elementoNome.innerText = novoNome;
-        elementoPontos.innerText = novaPontuacao + " pts";
+    // Vai testar as 3 caixas (1, 2 e 3)
+    for (let i = 1; i <= 3; i++) {
+        const elNome = document.getElementById(`nome-adv-${i}`);
+        const elPontos = document.getElementById(`pontos-adv-${i}`);
+
+        if (elNome && elPontos) {
+            // Se já existir uma caixa com o nome deste jogador, atualiza só os pontos
+            if (elNome.innerText.toUpperCase() === nome.toUpperCase()) {
+                elPontos.innerText = `${pontos} pts`;
+                
+                // Pequeno piscar amarelo para mostrar que ganhou pontos
+                elPontos.style.color = "#FFD700"; 
+                setTimeout(() => elPontos.style.color = "#35bdbd", 500);
+                return; // Encontrou o jogador e atualizou, para a função aqui
+            }
+            
+            // Se encontrar uma caixa livre ("AGUARDANDO..."), guarda-a na memória para usar se precisar
+            if (elNome.innerText.includes("AGUARDANDO") && !slotVazio) {
+                slotVazio = { nome: elNome, pontos: elPontos };
+            }
+        }
+    }
+
+    // Se o jogador não tinha cartão e encontramos um slot livre, escreve o nome dele lá
+    if (slotVazio) {
+        slotVazio.nome.innerText = nome.toUpperCase();
+        slotVazio.pontos.innerText = `${pontos} pts`;
     }
 }
