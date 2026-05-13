@@ -9,7 +9,27 @@ let respostasCertas = 0;
 let tempoRestante = 30;
 let jogoAtivo = true;
 let jogoTerminou = false; 
-const PALAVRA_MESTRA = "SOLIDARIEDADE";
+
+// --- O NOSSO DICIONÁRIO DO JOGO ---
+const BANCO_PALAVRAS = [
+    {
+        mestra: "SOLIDARIEDADE",
+        validas: ["SOL", "LIDA", "DAR", "REDE", "IDADE", "DADO", "DOR", "RIA", "DIA", "SER", "RIO", "AR", "ERA", "DEDO", "LIDE"]
+    },
+    {
+        mestra: "PROGRAMADOR",
+        validas: ["PRO", "GRAMA", "AMOR", "DOR", "RODA", "ROMA", "PODA", "PAR", "POR", "MAR", "DOM", "PRADO", "MACA"]
+    },
+    {
+        mestra: "COMPUTADOR",
+        validas: ["COM", "COR", "DOR", "POR", "ATOR", "ROTA", "RODA", "DOAR", "PAR", "PUM", "MUTA", "PODA", "TOCAR"]
+    }
+];
+
+// Escolhe um jogo à sorte sempre que a página carrega
+const jogoAtual = BANCO_PALAVRAS[Math.floor(Math.random() * BANCO_PALAVRAS.length)];
+const PALAVRA_MESTRA = jogoAtual.mestra;
+
 let palavrasDescobertas = [];
 
 window.onload = function() {
@@ -17,6 +37,12 @@ window.onload = function() {
     const input = document.getElementById('input-resposta');
     const displayPontos = document.getElementById('pontos-valor');
     const displayTempo = document.getElementById('tempo-valor');
+
+    // 🚨 NOVIDADE: Atualiza o HTML para mostrar a palavra sorteada em vez do texto fixo!
+    const tituloPalavra = document.querySelector('.palavra-mestra');
+    if (tituloPalavra) {
+        tituloPalavra.innerText = PALAVRA_MESTRA;
+    }
 
     // 📢 AVISAR ENTRADA NO MODO ONLINE
     if (modoOnline && roomId && typeof socket !== 'undefined') {
@@ -44,7 +70,8 @@ window.onload = function() {
                 return;
             }
 
-            if (tentativa.length > 0 && validarSequencia(PALAVRA_MESTRA, tentativa)) {
+            // 🚨 NOVIDADE: Adicionámos a verificação do Dicionário (jogoAtual.validas.includes)
+            if (tentativa.length > 0 && validarSequencia(PALAVRA_MESTRA, tentativa) && jogoAtual.validas.includes(tentativa)) {
                 palavrasDescobertas.push(tentativa);
                 processarAcerto(tentativa, input, displayPontos);
             } else {

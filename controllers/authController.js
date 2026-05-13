@@ -8,6 +8,13 @@ export const getSignUp = (req, res) => {
     res.render('signUp');
 }
 
+export const getLogout = (req, res) => {
+    req.session.destroy(() => {
+        console.log("Sessão terminada. Utilizador fez logout.");
+        res.redirect('/login');
+    });
+};
+
 // -----------------------------------------
 // SIGN UP (REGISTO) - Operação CREATE
 // -----------------------------------------
