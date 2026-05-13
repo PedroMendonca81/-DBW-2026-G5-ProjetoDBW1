@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import session from "express-session";
 import mongoose from "mongoose";
 import methodOverride from "method-override";
@@ -15,8 +16,10 @@ import modeRoutes from "./routes/modeRoute.js";
 import lobbyRoutes from "./routes/lobbyRoutes.js";
 import leaderboardRoutes from "./routes/leaderboardRoutes.js";
 
+
 // --- SOCKETS ---
 import lobbySocket, { salasAtivas } from "./routes/sockets/lobbySocket.js";
+
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -39,7 +42,7 @@ lobbySocket(io);
 
 // --- MIDDLEWARES ---
 app.use(session({
-    secret: "o_segredo_da_matrioska_2026",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false
 }));
@@ -60,8 +63,12 @@ app.get('/', (req, res) => {
     res.redirect('/login');
 });
 
+app.use((req, res) => {
+    res.status(404).render('404');
+});
+
 // --- BASE DE DADOS E ARRANQUE ---
-const dbURI = "mongodb+srv://projectx:mendonca67@cluster1.wvohqrm.mongodb.net/?appName=Cluster1";
+const dbURI = process.env.DB_URI;
 mongoose.connect(dbURI) 
   .then(() => {
     console.log("Conectado ao MongoDB com sucesso! ✅");

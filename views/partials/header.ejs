@@ -5,8 +5,11 @@
     <% if (typeof tipo !== 'undefined' && tipo === 'completo')  { %>
         <a href="/profile" class="header-perfil-link">
             <div class="user-info">
-                <span class="user-name"><%= typeof user !== 'undefined' ? user.username : 'Convidado' %></span>
-                <img src="/images/<%= (typeof user !== 'undefined' && user.imagemPerfil) ? user.imagemPerfil : 'default.png' %>" alt="Foto de Perfil" class="user-pfp">
+                <span class="user-name">
+                    <%= (typeof user !== 'undefined' && user) ? user.username : 'Convidado' %>
+                </span>
+                
+                <img src="/images/<%= (typeof user !== 'undefined' && user && user.imagemPerfil) ? user.imagemPerfil : 'default.png' %>" alt="Foto de Perfil" class="user-pfp">
             </div>
         </a>
     <% } %>

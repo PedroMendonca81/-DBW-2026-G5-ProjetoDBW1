@@ -3,6 +3,11 @@ const urlParams = new URLSearchParams(window.location.search);
 const roomId = urlParams.get('room');
 const modoOnline = urlParams.get('mode') === 'online';
 
+// --- EFEITOS SONOROS ---
+const somAcerto = new Audio('/sounds/acerto.mp3');
+const somErro = new Audio('/sounds/erro.mp3');
+const somTick = new Audio('/sounds/relogio.mp3');
+
 // --- ESTADO DO JOGO ---
 let pontuacaoSessao = 0;
 let respostasCertas = 0;
@@ -84,6 +89,9 @@ window.onload = function() {
     const contador = setInterval(() => {
         if (tempoRestante > 0) {
             tempoRestante--;
+            if (tempoRestante <= 8 && tempoRestante > 0) {
+                somTick.play();
+            }
             if (displayTempo) displayTempo.innerText = tempoRestante + "s";
         } else {
             clearInterval(contador);
@@ -121,6 +129,7 @@ function validarSequencia(mestre, sub) {
 
 // --- PROCESSAMENTO DE RESPOSTAS ---
 function processarAcerto(palavra, input, display) {
+    somAcerto.play();
     pontuacaoSessao += palavra.length * 10;
     respostasCertas++;
     display.innerText = pontuacaoSessao + " pontos";
@@ -140,6 +149,7 @@ function processarAcerto(palavra, input, display) {
 }
 
 function processarErro(input) {
+    somErro.play()
     input.classList.add('input-erro');
     resetInput(input);
 }
