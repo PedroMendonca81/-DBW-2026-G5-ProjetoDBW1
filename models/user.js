@@ -10,7 +10,8 @@ const userSchema = new Schema({
     respostasEncontradas: { type: Number, default: 0 },
     respostasErradas: { type: Number, default: 0 },
     tempoTotalJogo: { type: Number, default: 0 },
-    imagemPerfil: { type: String, default: "default.png" } // Link da imagem
+    imagemPerfil: { type: String, default: "default.png" }, // Link da imagem
+    historicoPontos: { type: [Number], default: [] }
 });
 
 export default model("User", userSchema); // Exporta o modelo para usarmos no Controller

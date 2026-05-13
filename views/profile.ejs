@@ -16,20 +16,30 @@
 
         <main class="zona-meio">
             <div class="lateral-preta"></div> <div class="area-central">
-                <div class="moldura-preta">
+                <div class="moldura-preta" style="flex-direction: column; gap: 40px; max-width: 900px;">
                     
-                    <div class="coluna-esquerda">
-                        <img src="/images/<%= user.imagemPerfil %>" alt="Foto de Perfil" class="foto-perfil">
-                        <div class="caixa-nome"><%= user.username %></div>
+                    <div style="display: flex; justify-content: space-around; width: 100%; align-items: center; flex-wrap: wrap; gap: 20px;">
+                        
+                        <div class="coluna-esquerda">
+                            <img src="/images/<%= user.imagemPerfil %>" alt="Foto de Perfil" class="foto-perfil">
+                            <div class="caixa-nome"><%= user.username %></div>
+                        </div>
+
+                        <div class="coluna-direita">
+                            <div class="caixa-stat">Pontuação: <%= user.pontuacao %></div>
+                            <div class="caixa-stat">Nº de respostas certas: <%= user.respostasEncontradas %></div>
+                            <div class="caixa-stat">Nº de respostas erradas: <%= user.respostasErradas %></div>
+                            <div class="caixa-stat">Tempo de Jogo: <%= user.tempoTotalJogo %>s</div>
+                            <a href="/profile/change-pfp" class="btn-mudar-pfp">Mudar pfp</a>
+                        </div>
+
                     </div>
 
-                    <div class="coluna-direita">
-                    <div class="caixa-stat">Pontuação: <%= user.pontuacao %></div>
-                    <div class="caixa-stat">Nº de respostas certas: <%= user.respostasEncontradas %></div>
-                    <div class="caixa-stat">Nº de respostas erradas: <%= user.respostasErradas %></div>
-                    <div class="caixa-stat">Tempo de Jogo: <%= user.tempoTotalJogo %>s</div>
-    
-                    <a href="/profile/change-pfp" class="btn-mudar-pfp">Mudar pfp</a>
+                    <div style="background-color: white; border: 4px solid black; padding: 20px; width: 100%; box-sizing: border-box; box-shadow: 6px 6px 0px black;">
+                        <h3 style="text-align: center; text-transform: uppercase; margin-bottom: 15px; font-weight: 900;">Histórico de Partidas</h3>
+                        <canvas id="graficoEvolucao" style="max-height: 250px;"></canvas>
+                    </div>
+
                 </div>
 
                 </div>
@@ -42,6 +52,19 @@
         </footer>
 
     </div>
+
+    <div id="dados-historico" style="display: none;">
+    <%- JSON.stringify(user.historicoPontos || []) %>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        const dataBruta = document.getElementById('dados-historico').textContent;
+        const historicoRealBD = JSON.parse(dataBruta);
+    </script>
+
+    <script src="/js/profile.js"></script>
 
 </body>
 </html>

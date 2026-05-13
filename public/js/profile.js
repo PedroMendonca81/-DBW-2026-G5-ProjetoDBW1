@@ -1,23 +1,24 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // Selecionamos a "tela" que criámos no HTML
     const ctx = document.getElementById('graficoEvolucao').getContext('2d');
 
-    // Criamos os nossos MOCK DATA (Dados falsos para testar o design)
-    // No futuro, isto virá do MongoDB do Aluno 1
-    const ultimosJogos = ['Jogo 1', 'Jogo 2', 'Jogo 3', 'Jogo 4', 'Jogo 5'];
-    const pontuacoes = [150, 80, 220, 310, 190]; 
+    // 1. Lemos os dados reais. Se a pessoa nunca jogou, mostramos apenas um [0] para o gráfico não dar erro.
+    const pontuacoes = historicoRealBD.length > 0 ? historicoRealBD : [0];
 
-    // Desenhamos o Gráfico
+    // 2. Criamos as etiquetas (Labels) automaticamente ("Jogo 1", "Jogo 2"...) 
+    // com base no tamanho do histórico.
+    const ultimosJogos = pontuacoes.map((pontos, index) => `Jogo ${index + 1}`);
+
+    // Desenhamos o Gráfico com os dados reais!
     new Chart(ctx, {
-        type: 'line', // Podes mudar para 'line' se preferires um gráfico de linhas!
+        type: 'line', 
         data: {
-            labels: ultimosJogos,
+            labels: ultimosJogos, // Agora isto cresce automaticamente!
             datasets: [{
-                label: 'Pontuação',
-                data: pontuacoes,
-                backgroundColor: '#35bdbd', // O nosso ciano do jogo
-                borderColor: 'black',       // Borda preta retro
-                borderWidth: 3              // Borda bem grossa a combinar com o UI
+                label: 'Pontuação Real',
+                data: pontuacoes, // Aqui entram os dados da Base de Dados!
+                backgroundColor: '#35bdbd', 
+                borderColor: 'black',       
+                borderWidth: 3              
             }]
         },
         options: {
