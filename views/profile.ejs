@@ -15,7 +15,8 @@
         </header>
 
         <main class="zona-meio">
-            <div class="lateral-preta"></div> <div class="area-central">
+            <div class="lateral-preta"></div> 
+            <div class="area-central">
                 <div class="moldura-preta" style="flex-direction: column; gap: 40px; max-width: 900px;">
                     
                     <div style="display: flex; justify-content: space-around; width: 100%; align-items: center; flex-wrap: wrap; gap: 20px;">
@@ -30,22 +31,22 @@
                             <div class="caixa-stat">Nº de respostas certas: <%= user.respostasEncontradas %></div>
                             <div class="caixa-stat">Nº de respostas erradas: <%= user.respostasErradas %></div>
                             <div class="caixa-stat">Tempo de Jogo: <%= user.tempoTotalJogo %>s</div>
+                            
                             <a href="/profile/change-pfp" class="btn-mudar-pfp">Mudar pfp</a>
                         </div>
 
                     </div>
 
-                    <div style="background-color: white; border: 4px solid black; padding: 20px; width: 100%; box-sizing: border-box; box-shadow: 6px 6px 0px black;">
+                    <div style="background-color: white; border: 4px solid black; padding: 20px; width: 100%; box-sizing: border-box; box-shadow: 6px 6px 0px black; margin-bottom: 60px;">
                         <h3 style="text-align: center; text-transform: uppercase; margin-bottom: 15px; font-weight: 900;">Histórico de Partidas</h3>
                         <canvas id="graficoEvolucao" style="max-height: 250px;"></canvas>
                     </div>
 
                 </div>
 
-                </div>
             </div>
-
-            <div class="lateral-preta"></div> </main>
+            <div class="lateral-preta"></div> 
+        </main>
 
         <footer class="barra-cinzenta">
             <a href="/lobby" class="btn-voltar">Voltar</a>

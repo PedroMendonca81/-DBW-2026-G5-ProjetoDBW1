@@ -8,6 +8,9 @@ import { fileURLToPath } from "url";
 import http from "http";
 import { Server } from "socket.io";
 
+// 👇 ADICIONA ESTA LINHA 👇
+import User from "./models/user.js"; 
+
 // --- ROTAS ---
 import gameRoutes from "./routes/gameRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
@@ -51,6 +54,7 @@ app.use(methodOverride("_method"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public"));
 
+
 // --- DEFINIÇÃO DE ROTAS ---
 app.use('/', gameRoutes);
 app.use('/', authRoutes);
@@ -63,9 +67,31 @@ app.get('/', (req, res) => {
     res.redirect('/login');
 });
 
+app.get('/profile/:username', async (req, res) => {
+    try {
+        const nomeClicado = req.params.username;
+        const jogadorEncontrado = await User.findOne({ username: nomeClicado });
+
+        if (!jogadorEncontrado) {
+            return res.status(404).render('404', { mensagem: 'Jogador não encontrado' });
+        }
+
+        res.render('profile', { 
+            user: jogadorEncontrado 
+        });
+
+    } catch (erro) {
+        console.error(erro);
+        res.status(500).send("Erro no servidor");
+    }
+});
+
+
+// O 404 TEM DE SER SEMPRE A ÚLTIMA ROTA ANTES DA BASE DE DADOS
 app.use((req, res) => {
     res.status(404).render('404');
 });
+
 
 // --- BASE DE DADOS E ARRANQUE ---
 const dbURI = process.env.DB_URI;

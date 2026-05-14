@@ -53,19 +53,28 @@ export const getOnlineLobby = async (req, res) => {
 
 
 // --- ROTA DE FIM DE JOGO ---
+// --- ROTA DE FIM DE JOGO ---
 export const postFimJogo = async (req, res) => {
     try {
         const pontosGanhos = parseInt(req.body.pontosFinais) || 0;
         const respostasGanhas = parseInt(req.body.certasFinais) || 0;
+        
+        // 👇 1. LÊ AS NOVAS VARIÁVEIS QUE VÊM DO JOGO 👇
+        const errosCometidos = parseInt(req.body.erradasFinais) || 0;
+        const tempoGasto = parseInt(req.body.tempoFinal) || 0;
 
-        if (req.session.usernameLogado && pontosGanhos > 0) {
+        // 👇 2. REMOVI O "&& pontosGanhos > 0" para guardar o tempo mesmo com 0 pontos!
+        if (req.session.usernameLogado) {
             
             await User.findOneAndUpdate(
                 { username: req.session.usernameLogado },
                 { 
                     $inc: { 
                         pontuacao: pontosGanhos, 
-                        respostasEncontradas: respostasGanhas 
+                        respostasEncontradas: respostasGanhas,
+                        // 👇 3. SOMA OS ERROS E O TEMPO NA BASE DE DADOS 👇
+                        respostasErradas: errosCometidos,
+                        tempoTotalJogo: tempoGasto
                     },
                     // 📈 Isto faz com que o gráfico do perfil funcione!
                     $push: { 
@@ -76,7 +85,7 @@ export const postFimJogo = async (req, res) => {
                 { returnDocument: 'after' } 
             );
             
-            console.log(`✓ ${req.session.usernameLogado} ganhou ${pontosGanhos} pontos`);
+            console.log(`✓ ${req.session.usernameLogado} guardou: ${pontosGanhos} pts | ${errosCometidos} erros | ${tempoGasto} segs`);
         }
 
         res.redirect('/leaderboard');

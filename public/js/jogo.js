@@ -11,7 +11,9 @@ const somTick = new Audio('/sounds/relogio.mp3');
 // --- ESTADO DO JOGO ---
 let pontuacaoSessao = 0;
 let respostasCertas = 0;
-let tempoRestante = 30;
+let respostasErradas = 0; // 🚨 NOVIDADE: Variável para contar os erros
+let tempoTotalInicial = 30; // 🚨 NOVIDADE: Guarda o tempo inicial para sabermos quanto passou
+let tempoRestante = tempoTotalInicial;
 let jogoAtivo = true;
 let jogoTerminou = false; 
 
@@ -43,7 +45,6 @@ window.onload = function() {
     const displayPontos = document.getElementById('pontos-valor');
     const displayTempo = document.getElementById('tempo-valor');
 
-    // 🚨 NOVIDADE: Atualiza o HTML para mostrar a palavra sorteada em vez do texto fixo!
     const tituloPalavra = document.querySelector('.palavra-mestra');
     if (tituloPalavra) {
         tituloPalavra.innerText = PALAVRA_MESTRA;
@@ -54,7 +55,6 @@ window.onload = function() {
         const nomeUserLogado = document.getElementById('nome-user-logado')?.innerText || "Jogador";
         console.log("Conectando à sala:", roomId, "como", nomeUserLogado);
         
-        // Envia a sala e o nome para o servidor saber quem entrou
         socket.emit('joinRoom', { 
             room: roomId, 
             username: nomeUserLogado 
@@ -75,7 +75,6 @@ window.onload = function() {
                 return;
             }
 
-            // 🚨 NOVIDADE: Adicionámos a verificação do Dicionário (jogoAtual.validas.includes)
             if (tentativa.length > 0 && validarSequencia(PALAVRA_MESTRA, tentativa) && jogoAtual.validas.includes(tentativa)) {
                 palavrasDescobertas.push(tentativa);
                 processarAcerto(tentativa, input, displayPontos);
@@ -105,11 +104,21 @@ window.onload = function() {
 
                 const finalPontos = document.getElementById('input-pontos-finais');
                 const finalCertas = document.getElementById('input-certas-finais');
+                const finalErradas = document.getElementById('input-erradas-finais'); // 🚨 NOVIDADE
+                const finalTempo = document.getElementById('input-tempo-final'); // 🚨 NOVIDADE
                 
-                if (finalPontos && finalCertas) {
+                // Calculamos o tempo gasto subtraindo o restante ao inicial
+                const tempoGasto = tempoTotalInicial - tempoRestante; 
+
+                if (finalPontos && finalCertas && finalErradas && finalTempo) {
                     finalPontos.value = pontuacaoSessao;
                     finalCertas.value = respostasCertas;
+                    finalErradas.value = respostasErradas; // 🚨 NOVIDADE: Adiciona as erradas ao form
+                    finalTempo.value = tempoGasto; // 🚨 NOVIDADE: Adiciona o tempo ao form
+                    
                     document.getElementById('form-fim-jogo').submit();
+                } else {
+                    console.error("ERRO: Formulário final ou inputs não encontrados!");
                 }
             }
         }
@@ -149,7 +158,8 @@ function processarAcerto(palavra, input, display) {
 }
 
 function processarErro(input) {
-    somErro.play()
+    somErro.play();
+    respostasErradas++; // 🚨 NOVIDADE: Conta mais um erro sempre que esta função é chamada!
     input.classList.add('input-erro');
     resetInput(input);
 }
@@ -171,14 +181,10 @@ if (typeof socket !== 'undefined') {
     });
 
     // Escutar novos adversários entrando
-
     socket.on('novoAdversario', (data) => {
         console.log("Novo adversário na sala:", data.username);
         atualizarPosicaoAdversario(data.username, data.pontos);
 
-        // 📢 O TRUQUE MÁGICO: 
-        // Como o adversário acabou de entrar e o ecrã dele está vazio,
-        // eu envio os meus dados atuais para o ecrã dele se preencher com o meu nome!
         const meuNome = document.getElementById('nome-user-logado')?.innerText || "Jogador";
         socket.emit('playerScored', { 
             roomId: roomId, 
@@ -192,30 +198,25 @@ if (typeof socket !== 'undefined') {
 function atualizarPosicaoAdversario(nome, pontos) {
     let slotVazio = null;
 
-    // Vai testar as 3 caixas (1, 2 e 3)
     for (let i = 1; i <= 3; i++) {
         const elNome = document.getElementById(`nome-adv-${i}`);
         const elPontos = document.getElementById(`pontos-adv-${i}`);
 
         if (elNome && elPontos) {
-            // Se já existir uma caixa com o nome deste jogador, atualiza só os pontos
             if (elNome.innerText.toUpperCase() === nome.toUpperCase()) {
                 elPontos.innerText = `${pontos} pts`;
                 
-                // Pequeno piscar amarelo para mostrar que ganhou pontos
                 elPontos.style.color = "#FFD700"; 
                 setTimeout(() => elPontos.style.color = "#35bdbd", 500);
-                return; // Encontrou o jogador e atualizou, para a função aqui
+                return; 
             }
             
-            // Se encontrar uma caixa livre ("AGUARDANDO..."), guarda-a na memória para usar se precisar
             if (elNome.innerText.includes("AGUARDANDO") && !slotVazio) {
                 slotVazio = { nome: elNome, pontos: elPontos };
             }
         }
     }
 
-    // Se o jogador não tinha cartão e encontramos um slot livre, escreve o nome dele lá
     if (slotVazio) {
         slotVazio.nome.innerText = nome.toUpperCase();
         slotVazio.pontos.innerText = `${pontos} pts`;
