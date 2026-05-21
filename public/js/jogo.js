@@ -104,8 +104,8 @@ window.onload = function() {
 
                 const finalPontos = document.getElementById('input-pontos-finais');
                 const finalCertas = document.getElementById('input-certas-finais');
-                const finalErradas = document.getElementById('input-erradas-finais'); // 🚨 NOVIDADE
-                const finalTempo = document.getElementById('input-tempo-final'); // 🚨 NOVIDADE
+                const finalErradas = document.getElementById('input-erradas-finais'); //  NOVIDADE
+                const finalTempo = document.getElementById('input-tempo-final'); //  NOVIDADE
                 
                 // Calculamos o tempo gasto subtraindo o restante ao inicial
                 const tempoGasto = tempoTotalInicial - tempoRestante; 
@@ -113,8 +113,8 @@ window.onload = function() {
                 if (finalPontos && finalCertas && finalErradas && finalTempo) {
                     finalPontos.value = pontuacaoSessao;
                     finalCertas.value = respostasCertas;
-                    finalErradas.value = respostasErradas; // 🚨 NOVIDADE: Adiciona as erradas ao form
-                    finalTempo.value = tempoGasto; // 🚨 NOVIDADE: Adiciona o tempo ao form
+                    finalErradas.value = respostasErradas; //  NOVIDADE: Adiciona as erradas ao form
+                    finalTempo.value = tempoGasto; // NOVIDADE: Adiciona o tempo ao form
                     
                     document.getElementById('form-fim-jogo').submit();
                 } else {
