@@ -59,11 +59,11 @@ export const postFimJogo = async (req, res) => {
         const pontosGanhos = parseInt(req.body.pontosFinais) || 0;
         const respostasGanhas = parseInt(req.body.certasFinais) || 0;
         
-        // 👇 1. LÊ AS NOVAS VARIÁVEIS QUE VÊM DO JOGO 👇
+        //  1. LÊ AS NOVAS VARIÁVEIS QUE VÊM DO JOGO 
         const errosCometidos = parseInt(req.body.erradasFinais) || 0;
         const tempoGasto = parseInt(req.body.tempoFinal) || 0;
 
-        // 👇 2. REMOVI O "&& pontosGanhos > 0" para guardar o tempo mesmo com 0 pontos!
+        //  2. REMOVI O "&& pontosGanhos > 0" para guardar o tempo mesmo com 0 pontos!
         if (req.session.usernameLogado) {
             
             await User.findOneAndUpdate(
@@ -72,16 +72,16 @@ export const postFimJogo = async (req, res) => {
                     $inc: { 
                         pontuacao: pontosGanhos, 
                         respostasEncontradas: respostasGanhas,
-                        // 👇 3. SOMA OS ERROS E O TEMPO NA BASE DE DADOS 👇
+                        //  3. SOMA OS ERROS E O TEMPO NA BASE DE DADOS 
                         respostasErradas: errosCometidos,
                         tempoTotalJogo: tempoGasto
                     },
-                    // 📈 Isto faz com que o gráfico do perfil funcione!
+                    //  Isto faz com que o gráfico do perfil funcione!
                     $push: { 
                         historicoPontos: pontosGanhos 
                     }
                 },
-                // ✅ RESOLUÇÃO DO WARNING AQUI:
+                //  RESOLUÇÃO DO WARNING AQUI:
                 { returnDocument: 'after' } 
             );
             

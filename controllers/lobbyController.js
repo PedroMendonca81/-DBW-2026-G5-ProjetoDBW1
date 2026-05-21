@@ -23,7 +23,7 @@ export const getOnlineLobby = async (req, res) => {
     try {
         const utilizadorAtual = await User.findOne({ username: req.session.usernameLogado }).exec();
         
-        // 👈 Lê o objeto que o Socket está a atualizar
+        //  Lê o objeto que o Socket está a atualizar
         const salasVivas = req.app.get('salasCompartilhadas'); 
 
         res.render('game_online_lobby', { 

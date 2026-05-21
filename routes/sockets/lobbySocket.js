@@ -38,7 +38,7 @@ export default (io) => {
                     pontos: 0
                 });
 
-                console.log(`✅ ${nomeUser} entrou na Sala ${id}. Total: ${salasAtivas[id].jogadores}`);
+                console.log(` ${nomeUser} entrou na Sala ${id}. Total: ${salasAtivas[id].jogadores}`);
             }
         });
 
@@ -58,7 +58,7 @@ export default (io) => {
                 // Atualiza o Lobby para subtrair a pessoa
                 io.emit('atualizarLobby', salasAtivas);
                 
-                console.log(`❌ ${socket.username || 'Um jogador'} saiu da Sala ${id}. Restam: ${salasAtivas[id].jogadores}`);
+                console.log(` ${socket.username || 'Um jogador'} saiu da Sala ${id}. Restam: ${salasAtivas[id].jogadores}`);
             }
         });
     });

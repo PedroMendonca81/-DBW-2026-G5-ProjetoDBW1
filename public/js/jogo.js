@@ -11,8 +11,8 @@ const somTick = new Audio('/sounds/relogio.mp3');
 // --- ESTADO DO JOGO ---
 let pontuacaoSessao = 0;
 let respostasCertas = 0;
-let respostasErradas = 0; // 🚨 NOVIDADE: Variável para contar os erros
-let tempoTotalInicial = 30; // 🚨 NOVIDADE: Guarda o tempo inicial para sabermos quanto passou
+let respostasErradas = 0; //  NOVIDADE: Variável para contar os erros
+let tempoTotalInicial = 30; //  NOVIDADE: Guarda o tempo inicial para sabermos quanto passou
 let tempoRestante = tempoTotalInicial;
 let jogoAtivo = true;
 let jogoTerminou = false; 
@@ -50,7 +50,7 @@ window.onload = function() {
         tituloPalavra.innerText = PALAVRA_MESTRA;
     }
 
-    // 📢 AVISAR ENTRADA NO MODO ONLINE
+    //  AVISAR ENTRADA NO MODO ONLINE
     if (modoOnline && roomId && typeof socket !== 'undefined') {
         const nomeUserLogado = document.getElementById('nome-user-logado')?.innerText || "Jogador";
         console.log("Conectando à sala:", roomId, "como", nomeUserLogado);
@@ -143,7 +143,7 @@ function processarAcerto(palavra, input, display) {
     respostasCertas++;
     display.innerText = pontuacaoSessao + " pontos";
 
-    // 📢 ENVIAR PONTOS PARA O SERVIDOR EM TEMPO REAL
+    //  ENVIAR PONTOS PARA O SERVIDOR EM TEMPO REAL
     if (modoOnline && typeof socket !== 'undefined') {
         const nomeUser = document.getElementById('nome-user-logado')?.innerText || "Adversário";
         socket.emit('playerScored', { 
@@ -159,7 +159,7 @@ function processarAcerto(palavra, input, display) {
 
 function processarErro(input) {
     somErro.play();
-    respostasErradas++; // 🚨 NOVIDADE: Conta mais um erro sempre que esta função é chamada!
+    respostasErradas++; 
     input.classList.add('input-erro');
     resetInput(input);
 }
@@ -194,7 +194,7 @@ if (typeof socket !== 'undefined') {
     });
 }
 
-// 🧠 FUNÇÃO INTELIGENTE: Gere os 3 espaços ("slots") de adversários
+//  FUNÇÃO INTELIGENTE: Gere os 3 espaços ("slots") de adversários
 function atualizarPosicaoAdversario(nome, pontos) {
     let slotVazio = null;
 
