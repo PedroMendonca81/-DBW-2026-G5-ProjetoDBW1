@@ -1,5 +1,5 @@
 // controllers/profileController.js
-import User from "../models/user.js"; // Importa o modelo Mongoose real [cite: 338]
+import User from "../models/user.js"; // Importa o modelo Mongoose real 
 
 // Mostra o ecrã principal do perfil
 const showProfile = async function (req, res) {
@@ -30,7 +30,7 @@ const showPfpForm = async function (req, res) {
     res.render("changePfp", { user: user });
 };
 
-// Recebe o formulário e atualiza a foto (Operação UPDATE) [cite: 334]
+// Recebe o formulário e atualiza a foto (Operação UPDATE) 
 const updatePfp = async function (req, res) {
     try {
         if (!req.session.usernameLogado) return res.redirect('/login');
