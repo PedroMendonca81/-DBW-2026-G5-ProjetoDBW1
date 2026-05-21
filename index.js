@@ -8,7 +8,7 @@ import { fileURLToPath } from "url";
 import http from "http";
 import { Server } from "socket.io";
 
-// 👇 ADICIONA ESTA LINHA 👇
+
 import User from "./models/user.js"; 
 
 // --- ROTAS ---

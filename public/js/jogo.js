@@ -25,11 +25,11 @@ const BANCO_PALAVRAS = [
     },
     {
         mestra: "PROGRAMADOR",
-        validas: ["PRO", "GRAMA", "AMOR", "DOR", "RODA", "ROMA", "PODA", "PAR", "POR", "MAR", "DOM", "PRADO", "MACA"]
+        validas: ["PRO", "GRAMA", "AMOR", "DOR", "RODA", "ROMA", "PODA", "PAR", "POR", "MAR", "DOM", "PRADO", "MACA" , "PROGRAMA", "AMADOR"]
     },
     {
         mestra: "COMPUTADOR",
-        validas: ["COM", "COR", "DOR", "POR", "ATOR", "ROTA", "RODA", "DOAR", "PAR", "PUM", "MUTA", "PODA", "TOCAR"]
+        validas: ["COM", "COR", "DOR", "POR", "ATOR", "ROTA", "RODA", "DOAR", "PAR", "PUM", "MUTA", "PODA", "TOCAR", "COMPOTA", "PATO", "MORO", "COTA"]
     }
 ];
 
