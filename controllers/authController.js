@@ -37,7 +37,7 @@ export const postSignUp = async (req, res) => {
         }); 
         
         // 3. Grava na Base de Dados
-        await novoUtilizador.save(); // [cite: 364]
+        await novoUtilizador.save(); 
         
         console.log("Novo jogador registado:", novoUtilizador.username);
         res.redirect('/login'); 
@@ -62,7 +62,7 @@ export const postLogin = async (req, res) => {
             req.session.usernameLogado = utilizadorDb.username;
             res.redirect('/lobby'); 
         } else {
-            // 🚨 EM VEZ DE REDIRECT, RENDERIZAMOS A PÁGINA COM O ERRO
+            //  EM VEZ DE REDIRECT, RENDERIZAMOS A PÁGINA COM O ERRO
             console.log("Credenciais inválidas.");
             res.render('login', { errorMessage: "Nome de utilizador ou palavra-passe incorretos." });
         }

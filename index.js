@@ -97,11 +97,11 @@ app.use((req, res) => {
 const dbURI = process.env.DB_URI;
 mongoose.connect(dbURI) 
   .then(() => {
-    console.log("Conectado ao MongoDB com sucesso! ✅");
+    console.log("Conectado ao MongoDB com sucesso!");
     // USAR SEMPRE server.listen e não app.listen
     server.listen(3000, () => {
         console.log("==========================================");
-        console.log("🚀 Servidor Matrioska: http://localhost:3000");
+        console.log(" Servidor Matrioska: http://localhost:3000");
         console.log("==========================================");
     });
   })

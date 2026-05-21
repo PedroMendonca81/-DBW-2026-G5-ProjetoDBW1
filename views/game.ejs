@@ -67,11 +67,11 @@
 
         // Debug para veres no console (F12) se a ligação funcionou
         socket.on('connect', () => {
-            console.log("✅ Conectado ao servidor! ID:", socket.id);
+            console.log(" Conectado ao servidor! ID:", socket.id);
         });
 
         socket.on('connect_error', (error) => {
-            console.error("❌ Erro na ligação socket:", error);
+            console.error(" Erro na ligação socket:", error);
         });
 
         // Passamos o nome do user para o JS
